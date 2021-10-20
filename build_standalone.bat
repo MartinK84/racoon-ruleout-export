@@ -1,0 +1,1 @@
+pyinstaller.exe .\ruleout_export.py --onefile
