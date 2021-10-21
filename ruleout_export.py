@@ -646,8 +646,27 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     if args.input is None:
-        args.input = Path("J:\\MintExportRACOON.xml")
+        import tkinter
+        from tkinter import filedialog as fd
+
+        filetypes = (
+                ('XML files', '*.xml'),
+                ('All files', '*.*')
+            )
+
+        root = tkinter.Tk()
+        root.wm_withdraw() # this completely hides the root window
+
+        filename = fd.askopenfilename(
+            title='Select input file',
+            initialdir=Path(__file__).parent,
+            filetypes=filetypes
+            )
+        root.destroy()
+
+        args.input = Path(filename)
+
     if args.output is None:
-        args.output = Path("J:\\MintExportRACOON.xlsx")
+        args.output = Path.joinpath(Path(args.input).parent, Path(args.input).stem + ".xlsx")
 
     main(args)
