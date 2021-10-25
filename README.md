@@ -1,4 +1,11 @@
 # RACOON Ruleout Export
+A simple python script for parsing the xml-file of a Mint RACOON export and anonymization of the data using a sha256 hash. The script will convert the given XML file to a much smaller Excel file and include only those columns that are required for the Ruleout training.
+
+## Run the pre-compiled binary ruleout_export.exe
+```ruleout_export.exe``` is compiled using pyinstaller on windows 10 anaconda environment. To run the program simply execute ```ruleout_export.exe``` and select the previously exported Mint xml-file in the file selection popup. The parsed and converted excel file will be stored at the same location/path as the input file. 
+
+## Run the script using Python
+```ToDo```
 
 ## Notes
 The source code is based in parts on work by Moon Kim and the RACOON xml parser at https://gitlab.com/moon.kim.mail/racoon-xmlparser
