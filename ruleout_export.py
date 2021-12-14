@@ -20,8 +20,11 @@ def main(args):
     print(f"Parsing and anonymizing cases")
     case_assessment_list = []
     for case in cases:
-        case_assessment = get_covid_assessment(case, args)
-        case_assessment_list.append(case_assessment)
+        try:
+            case_assessment = get_covid_assessment(case, args)
+            case_assessment_list.append(case_assessment)
+        except:
+            pass        
 
     print(f"Writing output file: {args.output}")
     df = pd.DataFrame.from_records(case_assessment_list).transpose()
@@ -567,7 +570,13 @@ def get_covid_assessment(case, args):
                    
     covid_assessment = {}
 
-    case_string = case.attrib['CaseID'] + case[0].attrib['LastName'] + case[0].attrib['PatientID'] + case[0].attrib['InstitutionName']
+    # fails for unknown reasons for some sites
+    try:
+        lastname = case[0].attrib['LastName']
+    except:
+        pass
+    
+    case_string = case.attrib['CaseID'] + lastname + case[0].attrib['PatientID'] + case[0].attrib['InstitutionName']
     hash_string = encrypt(case_string)
     covid_assessment["ID"] = hash_string
 
