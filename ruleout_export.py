@@ -4,6 +4,7 @@ import pandas as pd
 import hashlib
 import argparse
 import openpyxl
+import uuid
 
 # main program
 def main(args):
@@ -580,8 +581,12 @@ def get_covid_assessment(case, args):
         print(f"Error getting lastname for case {case.attrib['CaseID']}, trying to continue without")
         pass
     
-    case_string = case.attrib['CaseID'] + lastname + case[0].attrib['PatientID'] + case[0].attrib['InstitutionName']
-    hash_string = encrypt(case_string)
+    # if building the case_string fails use a random uuid
+    try:
+        case_string = case.attrib['CaseID'] + lastname + case[0].attrib['PatientID'] + case[0].attrib['InstitutionName']
+        hash_string = encrypt(case_string)
+    except:
+        hash_string = str(uuid.uuid4())
     covid_assessment["ID"] = hash_string
 
     question_pairs = [('Label', 'QuestionType'), ('Question', 'Type')]
