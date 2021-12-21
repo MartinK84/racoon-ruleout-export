@@ -23,7 +23,9 @@ def main(args):
         try:
             case_assessment = get_covid_assessment(case, args)
             case_assessment_list.append(case_assessment)
-        except:
+        except Exception as e:
+            print(f"Error parsing case {case.attrib['CaseID']}")
+            print(e)
             pass        
 
     print(f"Writing output file: {args.output}")
@@ -575,6 +577,7 @@ def get_covid_assessment(case, args):
     try:
         lastname = case[0].attrib['LastName']
     except:
+        print(f"Error getting lastname for case {case.attrib['CaseID']}, trying to continue without")
         pass
     
     case_string = case.attrib['CaseID'] + lastname + case[0].attrib['PatientID'] + case[0].attrib['InstitutionName']
