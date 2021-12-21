@@ -571,6 +571,7 @@ def get_covid_assessment(case, args):
     covid_assessment = {}
 
     # fails for unknown reasons for some sites
+    lastname = ''
     try:
         lastname = case[0].attrib['LastName']
     except:
