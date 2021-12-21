@@ -586,6 +586,7 @@ def get_covid_assessment(case, args):
         case_string = case.attrib['CaseID'] + lastname + case[0].attrib['PatientID'] + case[0].attrib['InstitutionName']
         hash_string = encrypt(case_string)
     except:
+        print(f"Error building case_string for case {case.attrib['CaseID']}, using random UUID")
         hash_string = str(uuid.uuid4())
     covid_assessment["ID"] = hash_string
 
