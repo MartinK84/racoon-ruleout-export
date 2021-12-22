@@ -27,9 +27,15 @@ def main(args):
         except Exception as e:
             print(f"Error parsing case {case.attrib['CaseID']}")
             print(e)
-            pass        
+            try:
+                print("Error case info:")
+                print(case.attrib)
+                for c in case:
+                    print(f"{c}: {c.attrib}")
+            except:
+                pass        
 
-    print(f"Building output data: {args.output}")
+    print(f"Building output data")
     df = pd.DataFrame.from_records(case_assessment_list).transpose()
 
     # exclude data with age > 100
