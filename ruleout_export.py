@@ -29,8 +29,16 @@ def main(args):
             print(e)
             pass        
 
-    print(f"Writing output file: {args.output}")
+    print(f"Building output data: {args.output}")
     df = pd.DataFrame.from_records(case_assessment_list).transpose()
+
+    # exclude data with age > 100
+    age_cols = df.columns[list(df.loc['racoon-covid-19-demographic-information-age2',:].notna())]
+    age_ecld = df.loc['racoon-covid-19-demographic-information-age2', age_cols].astype(int) >= 100
+    df = df.drop(age_ecld.index[age_ecld], axis = 1)
+
+    # save to file
+    print(f"Writing output file: {args.output}")
     df.to_excel(args.output)
 
 # get list of all available labels, including a unique list of the values
