@@ -39,9 +39,12 @@ def main(args):
     df = pd.DataFrame.from_records(case_assessment_list).transpose()
 
     # exclude data with age > 100
-    age_cols = df.columns[list(df.loc['racoon-covid-19-demographic-information-age2',:].notna())]
-    age_ecld = df.loc['racoon-covid-19-demographic-information-age2', age_cols].astype(int) >= 100
-    df = df.drop(age_ecld.index[age_ecld], axis = 1)
+    try:
+        age_cols = df.columns[list(df.loc['racoon-covid-19-demographic-information-age2',:].notna())]
+        age_ecld = df.loc['racoon-covid-19-demographic-information-age2', age_cols].astype(int) >= 100
+        df = df.drop(age_ecld.index[age_ecld], axis = 1)
+    except:
+        pass
 
     # save to file
     print(f"Writing output file: {args.output}")
